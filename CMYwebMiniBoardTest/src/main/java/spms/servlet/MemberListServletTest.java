@@ -1,0 +1,137 @@
+package spms.servlet;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+import jakarta.servlet.GenericServlet;
+import jakarta.servlet.ServletContext;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.ServletRequest;
+import jakarta.servlet.ServletResponse;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+
+
+/**
+ * alt + shift + j : api 주석
+ * 회원 목록 조회
+ */
+@SuppressWarnings("serial")
+@WebServlet(value="/membertest/list")
+public class MemberListServletTest extends HttpServlet {
+
+	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		ServletContext  sc = this.getServletContext();
+		
+		String driver = sc.getInitParameter("driver");
+		String url = sc.getInitParameter("url");
+		String user = sc.getInitParameter("user");
+		String password = sc.getInitParameter("password");
+		
+		try {
+			Class.forName(driver);
+			System.out.println("드라이버 로딩 완료");
+			conn = DriverManager.getConnection(url, user, password);
+			
+			String sql = "";
+			
+			sql += "SELECT MEMBER_NO, EMAIL, PWD, MEMBER_NAME, CRE_DATE, MOD_DATE";
+			sql += " FROM MEMBER";
+			sql += " ORDER BY MEMBER_NO DESC";
+			
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			
+			res.setContentType("text/html");
+			res.setCharacterEncoding("utf-8");
+			
+			PrintWriter out = res.getWriter();
+			
+			String htmlStr = "";
+			
+			htmlStr += "<div style='text-align:center;padding-top:20px;'>";
+				htmlStr += "<button onclick=javascript:location.href='add'>신규 회원 등록</button>";
+			htmlStr += "</div>";
+			
+			out.println("<html lang='ko'><head><meta charset='UTF-8'><title>회원목록</title>");
+			out.println("<style>table {width: 100%;border: 1px solid #e3e3e3;border-collapse: collapse;}th, td {border: 1px solid #e3e3e3;padding: 10px;}</style>");
+			out.println("</head>");
+			
+			out.println("<body><h1>회원목록</h1>");
+			
+			out.println("<table border='1'>");
+			out.println("<tr style='background: #f3f3f3'>");
+			out.println("<td style='width: 20%;'>번호</td>");
+			out.println("<td style='width: 20%;'>이름</td>");
+			out.println("<td style='width: 20%;'>이메일</td>");
+			out.println("<td style='width: 20%;'>등록일</td>");
+			out.println("<td style='width: 20%;'>수정일</td>");
+			out.println("</tr>");			
+			
+			while(rs.next() == true) {
+				
+				out.println("<tr>");
+				out.println("<td>" + rs.getInt("MEMBER_NO") + "</td>");
+				out.println("<td><a href='update?memberNo=" + rs.getInt("MEMBER_NO") + "'>" + rs.getString("MEMBER_NAME") + "</a></td>");
+				out.println("<td>" + rs.getString("EMAIL") + "</td>");
+				out.println("<td>" + rs.getDate("CRE_DATE") + "</td>");
+				out.println("<td>" + rs.getString("MOD_DATE") + "</td>");
+				out.println("</tr>");
+			
+			}
+			
+			out.println("</table>");
+			out.println(htmlStr);
+			out.println("</body></html>");
+			
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			//db 객체 메모리 해제
+			if(rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			} 
+			if(pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			} 
+			if(conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			} 
+		}
+	}
+
+	@Override
+	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+		
+		
+	}
+
+	
+}

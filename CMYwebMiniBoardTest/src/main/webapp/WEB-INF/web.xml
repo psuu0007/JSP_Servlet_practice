@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="https://jakarta.ee/xml/ns/jakartaee" xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd" id="WebApp_ID" version="6.0">
+  <display-name>CMYwebMiniBoardTest</display-name>
+  <context-param>
+    <param-name>driver</param-name>
+    <param-value>oracle.jdbc.driver.OracleDriver</param-value>
+  </context-param>
+  <context-param>
+    <param-name>url</param-name>
+    <param-value>jdbc:oracle:thin:@localhost:1521:xe</param-value>
+  </context-param>
+  <context-param>
+    <param-name>user</param-name>
+    <param-value>eduTest</param-value>
+  </context-param>
+  <context-param>
+    <param-name>password</param-name>
+    <param-value>eduTest12</param-value>
+  </context-param>
+  <servlet>
+    <servlet-name>MemberUpdateTest</servlet-name>
+    <servlet-class>spms.servlet.MemberUpdateServletTest</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>MemberUpdateTest</servlet-name>
+    <url-pattern>/memberTest/update</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>MemberAddTest</servlet-name>
+    <servlet-class>spms.servlet.MemberAddServletTest</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>MemberAddTest</servlet-name>
+    <url-pattern>/memberTest/add</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>MemberlistTest</servlet-name>
+    <servlet-class>spms.servlet.MemberListServletTest</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>MemberlistTest</servlet-name>
+    <url-pattern>/memberTest/list</url-pattern>
+  </servlet-mapping>
+  <welcome-file-list>
+    <welcome-file>index.jsp</welcome-file>
+  </welcome-file-list>
+</web-app>

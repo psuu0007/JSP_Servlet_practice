@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+
+<script type="text/javascript">
+
+function passCheck() {
+    
+	let pass1 = document.getElementById('pass1');
+	let pass2 = document.getElementById('pass2');
+	let pass1Value = pass1.value;
+	let pass2Value = pass2.value;
+	
+	if (pass1Value != pass2Value) {
+		alert('비밀번호를 확인 하세요!');
+		return false;
+	}
+
+}
+
+</script>
+
+</body>
+</html>
