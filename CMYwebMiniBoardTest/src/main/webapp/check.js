@@ -56,3 +56,22 @@
 	}
 
 }
+
+function memberDelete(sendNo, sendName) {
+	
+    if (confirm('선택하신 회원 정보를 삭제 하시겠습니까?')) {
+
+        let form = document.getElementById('memberForm');
+        let memberNo = document.getElementById('memberNo');
+		let memberName = document.getElementById('memberName');
+		
+		memberNo.value = sendNo;
+		memberName.value = sendName;
+		
+        form.submit();
+    } 
+    else {
+		alert('삭제가 취소 되었습니다!');
+        return;
+    }
+}

@@ -110,8 +110,14 @@ public class MemberUpdateServletTest extends HttpServlet {
 			htmlStr += "</table>";
 			htmlStr += "<div style='padding-top: 20px;text-align: center;'>";
 			htmlStr += "<input type='submit' value='정보수정'>&nbsp;&nbsp;";
+			htmlStr += "<input type='button' value='정보삭제' onclick=javascript:memberDelete(" + memberNo + ",'" + memberName + "');>&nbsp;&nbsp;";
 			htmlStr += "<input type='reset' value='취소' onclick=javascript:location.href='list'>";
 			htmlStr += "</div>";
+			htmlStr += "</form>";
+			
+			htmlStr += "<form id='memberForm' action='delete' method='post' onsubmit='return false'>";
+			htmlStr += "<input type='hidden' id='memberNo' name='memberNo' value=''>";
+			htmlStr += "<input type='hidden' id='memberName' name='memberName' value=''>";
 			htmlStr += "</form>";
 			
 			htmlStr += "</body></html>";

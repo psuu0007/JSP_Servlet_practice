@@ -21,8 +21,8 @@ import jakarta.servlet.http.HttpServletResponse;
  * 회원 목록 조회
  */
 @SuppressWarnings("serial")
-@WebServlet(value="/membertest/list")
-public class MemberListServletTest extends HttpServlet {
+@WebServlet(value="/membertestN/list")
+public class MemberListServletTestN extends HttpServlet {
 
 	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		
@@ -62,12 +62,10 @@ public class MemberListServletTest extends HttpServlet {
 				htmlStr += "<button onclick=javascript:location.href='add'>신규 회원 등록</button>";
 			htmlStr += "</div>";
 			
-			out.println("<html lang='ko'><head><meta charset='UTF-8'><title>회원목록</title>");
-			out.println("<style>table {width: 100%;border: 1px solid #e3e3e3;border-collapse: collapse;}th, td {border: 1px solid #e3e3e3;padding: 10px;}</style>");
-			out.println("<script type='text/javascript' src='../check.js'></script>");
-			out.println("</head>");
+			out.println("<jsp:incldue page = '../include/incHead.jsp' />");
+			out.println("<jsp:incldue page = '../include/incTop.jsp' />");
 			
-			out.println("<body><h1>회원목록</h1>");
+			out.println("<h1>회원목록</h1>");
 			
 			out.println("<table border='1'>");
 			out.println("<tr style='background: #f3f3f3'>");
@@ -100,7 +98,7 @@ public class MemberListServletTest extends HttpServlet {
 			out.println("<input type='hidden' id='memberName' name='memberName' value=''>");
 			out.println("</form>");
 			
-			out.println("</body></html>");
+			out.println("<jsp:incldue page = '../include/incFooter.jsp' />");
 			
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
