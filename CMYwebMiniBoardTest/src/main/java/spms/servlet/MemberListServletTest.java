@@ -8,6 +8,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -59,17 +60,19 @@ public class MemberListServletTest extends HttpServlet {
 			String htmlStr = "";
 			
 			htmlStr += "<div style='text-align:center;padding-top:20px;'>";
-				htmlStr += "<button onclick=javascript:location.href='add'>신규 회원 등록</button>";
+				htmlStr += "<button class='btn btn-dark' onclick=javascript:location.href='add'>신규 회원 등록</button>";
 			htmlStr += "</div>";
 			
-			out.println("<html lang='ko'><head><meta charset='UTF-8'><title>회원목록</title>");
-			out.println("<style>table {width: 100%;border: 1px solid #e3e3e3;border-collapse: collapse;}th, td {border: 1px solid #e3e3e3;padding: 10px;}</style>");
-			out.println("<script type='text/javascript' src='../check.js'></script>");
-			out.println("</head>");
+			RequestDispatcher dispatcher;
 			
-			out.println("<body><h1>회원목록</h1>");
+			dispatcher = sc.getRequestDispatcher("/include/incHead.jsp");
+			dispatcher.include(req, res);
+			dispatcher = sc.getRequestDispatcher("/include/incTop.jsp");
+			dispatcher.include(req, res);
 			
-			out.println("<table border='1'>");
+			out.println("<h2 class='mb-4 fw-bold'>회원목록</h2>");
+			
+			out.println("<table class='table table-bordered'>");
 			out.println("<tr style='background: #f3f3f3'>");
 			out.println("<td style='width: 10%;'>번호</td>");
 			out.println("<td style='width: 20%;'>이름</td>");
@@ -87,7 +90,7 @@ public class MemberListServletTest extends HttpServlet {
 				out.println("<td>" + rs.getString("EMAIL") + "</td>");
 				out.println("<td>" + rs.getDate("CRE_DATE") + "</td>");
 				out.println("<td>" + rs.getString("MOD_DATE") + "</td>");
-				out.println("<td><button onclick=javascript:memberDelete(" + rs.getInt("MEMBER_NO") + ",'" + rs.getString("MEMBER_NAME") + "');>삭제</button></td>");
+				out.println("<td><button class='btn btn-danger btn-sm' onclick=javascript:memberDelete(" + rs.getInt("MEMBER_NO") + ",'" + rs.getString("MEMBER_NAME") + "');>삭제</button></td>");
 				out.println("</tr>");
 			
 			}
@@ -100,7 +103,8 @@ public class MemberListServletTest extends HttpServlet {
 			out.println("<input type='hidden' id='memberName' name='memberName' value=''>");
 			out.println("</form>");
 			
-			out.println("</body></html>");
+			dispatcher = sc.getRequestDispatcher("/include/incFooter.jsp");
+			dispatcher.include(req, res);
 			
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
