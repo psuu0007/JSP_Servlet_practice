@@ -5,7 +5,7 @@
 
 <head>
 <meta charset="UTF-8">
-<title>expression2.jsp jsp전용 문법 배우기2</title>
+<title>expressionTest2.jsp</title>
 
 <style type="text/css">
 h1, p {
@@ -19,28 +19,17 @@ h1, p {
 
 </head>
 <%
-	int n = 10;
-	String greetStr = "벌써 아침이네";
 	
-	request.setAttribute("n", n);
-	request.setAttribute("greetStr", greetStr);
+// 	form 태그에 팀원의 이름과 좋아하는 음악을 담는다
 	
-	// setAttribute 실행 예시
-// 	RequestDispatcher dispatcher = request.getRequestDispatcher("/backEnd");
-// 	dispatcher.forward(request, response);
-	
+// 	서블릿에서 그 내용을 콘솔에 출력하시오
+// 	팀원 이름: 		???
+// 	팀원 취향 음악: 	???
+// 	서블릿은 알아서 만든다
 %>
 
 <body>
 
-	<h2>request 객체 다루기</h2>
-	<h1><%=greetStr %></h1>
-
-	<p>
-		<%=n + 20 %>
-	</p>
-	
-<!-- 	getParameter()예시 -->
 	<form action="./backEnd" method="post">
 		<label>책 이름</label>
 		<input type="text" name="bookName">
