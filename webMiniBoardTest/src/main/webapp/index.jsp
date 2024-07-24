@@ -12,14 +12,17 @@
 </style>
 
 <script>
-
+	function pageMoveMemberListFnc() {
+		location.href = './member/list';
+	}
 </script>
 
 </head>
 
 
 <body>
-	<h6>hello jsp</h6>
-	<p>환영콤</p>
+	<h1>Hello JSP&amp;Servlet</h1>
+	<p>환영</p>
+	<button onclick="pageMoveMemberListFnc();">회원목록으로 이동</button>
 </body>
 </html>
