@@ -72,7 +72,6 @@ public class LoginServlet extends HttpServlet {
 			} else {
 				RequestDispatcher rd = req.getRequestDispatcher("LoginFail.jsp");
 				
-				
 				rd.forward(req, res);
 			}
 			

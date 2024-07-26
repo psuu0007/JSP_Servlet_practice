@@ -40,7 +40,7 @@ public class MemberListServlet extends HttpServlet {
 		String user = "";
 		String password = "";
 
-		String contextPath = req.getContextPath();
+		// String contextPath = req.getContextPath();
 
 		try {
 			ServletContext sc = this.getServletContext();

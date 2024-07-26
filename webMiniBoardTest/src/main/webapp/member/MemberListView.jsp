@@ -16,6 +16,10 @@
 </script>
 </head>
 
+<jsp:useBean id="memberList" scope="request"
+	class="java.util.ArrayList"
+	type="java.util.ArrayList<spms.dto.MemberDto>" />
+
 <body>
 	<jsp:include page="/Header.jsp" />
 
@@ -34,16 +38,20 @@
 		</div>
 
 		<%
-		ArrayList<MemberDto> memberList = (ArrayList<MemberDto>) request.getAttribute("memberList");
-
 		for (MemberDto memberDto : memberList) {
 		%>
 
 		<div class="user_info">
-			<span><%=memberDto.getMemberNo()%></span> <span> <a
-				href='./update?memberNo=<%=memberDto.getMemberNo()%>'> <%=memberDto.getMemberName()%>
-			</a>
-			</span> <span><%=memberDto.getEmail()%></span> <span><%=memberDto.getCreatedDate()%></span>
+
+			<span><%=memberDto.getMemberNo()%></span>
+			<span> 
+				<a
+					href='./update?memberNo=<%=memberDto.getMemberNo()%>'> 
+					<%=memberDto.getMemberName()%>
+				</a>
+			</span> 
+			<span><%=memberDto.getEmail()%></span> 
+			<span><%=memberDto.getCreatedDate()%></span>
 			<span><a href='./delete?memberNo=<%=memberDto.getMemberNo()%>'>[삭제]</a></span>
 		</div>
 
