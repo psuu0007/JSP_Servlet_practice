@@ -20,6 +20,8 @@
 <jsp:setProperty property="email" name="memberErrorInfo"/>
 
 <body>
+	<jsp:include page="/Header.jsp" />
+
 	<h1>시스템 오류</h1>
 	<pre>
 		다시 한번 확인해주세요!
@@ -33,6 +35,8 @@
 		<jsp:getProperty property="email" name="memberErrorInfo"/>
 	</div>
 	<!-- <button onclick="pageMoveMemberListFnc();">회원목록으로 이동</button> -->
+	
+	<jsp:include page="/Tail.jsp" />
 </body>
 </html>
 

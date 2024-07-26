@@ -66,7 +66,7 @@ public class LoginServlet extends HttpServlet {
 				MemberDto memberDto = new MemberDto(email, memberName);
 
 				HttpSession session = req.getSession();
-				session.setAttribute("memberDto", memberDto);
+				session.setAttribute("sessionMemberDto", memberDto);
 
 				res.sendRedirect("../member/list");
 			} else {

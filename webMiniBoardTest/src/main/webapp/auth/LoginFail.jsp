@@ -5,6 +5,7 @@
 <head>	
 <meta charset="UTF-8" http-equiv="Refresh" content="5;url=./login">
 <title>로그인 실패</title>
+<link rel="stylesheet" href="../css/listPage.css" />
 <style>
 
 </style>
@@ -22,6 +23,7 @@ function moveLoginPageFnc() {
 </head>
 	
 <body>
+<jsp:include page="/Header.jsp" />
 <h1>로그인 실패</h1>
 	<pre>
 		아이디(로그인 전용 아이디) 또는 비밀번호가 잘못 되었습니다.
@@ -38,5 +40,6 @@ function moveLoginPageFnc() {
 	<button onclick="moveLoginPageFnc();">로그인 페이지로 이동</button>
 	
 	<input id="loginPageVal" type="hidden" value="<%=request.getContextPath()%>">
+	<jsp:include page="/Tail.jsp" />
 </body>
 </html>

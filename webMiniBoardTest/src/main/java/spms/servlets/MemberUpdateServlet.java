@@ -9,12 +9,14 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
 
+import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import spms.dto.MemberDto;
 
 @WebServlet(urlPatterns = {"/member/update"})
 public class MemberUpdateServlet extends HttpServlet {
@@ -54,54 +56,37 @@ public class MemberUpdateServlet extends HttpServlet {
 			
 			rs = pstmt.executeQuery();
 			
+			// 사용자에게 백단에서 무슨 일이 벌어진 건지 알려주는 화면을 제작해야 함
+			res.setContentType("text/html");
+			res.setCharacterEncoding("UTF-8");
+			
 			String memberName = "";
 			String email = "";
 			String pwd = "";
 			Date creDate = null;
 			
+			MemberDto memberDto = null;
 			
 			while (rs.next()) {
 				memberName = rs.getString("MEMBER_NAME");
 				email = rs.getString("EMAIL");
 				pwd = rs.getString("PWD");
 				creDate = rs.getDate("CRE_DATE");
+				
+				memberDto = new MemberDto();
+
+				memberDto.setMemberNo(memberNo);
+				memberDto.setMemberName(memberName);
+				memberDto.setPassword(pwd);
+				memberDto.setEmail(email);
+				memberDto.setCreatedDate(creDate);
 			}
 			
-			// 사용자에게 백단에서 무슨 일이 벌어진 건지 알려주는 화면을 제작해야 함
-			res.setContentType("text/html");
-			res.setCharacterEncoding("UTF-8");
+			req.setAttribute("memberDto", memberDto);
 			
-			PrintWriter out = res.getWriter();
-			
-			String htmlStr = "";
-						
-			htmlStr += "<html>";
-			htmlStr += "<head>";
-			htmlStr += "<title>회원 정보</title>";
-			htmlStr += "<script>";
-			htmlStr += "function setAction(action) {";
-			htmlStr += "document.getElementById('myForm').action = action;";
-			htmlStr += "}";
-			htmlStr += "</script>";
-			htmlStr += "</head>";
-			htmlStr += "<body>";
-			htmlStr += "<h1>회원정보</h1>";
-			htmlStr += "<form id='myForm' method='post'>";
-			htmlStr += "번호: <input type='text' name='memberNo' value='"	 + memberNo + "' readonly='readonly'/><br />";
-			htmlStr += "이름: <input type='text' name='memberName' value='" + memberName + "' /><br />";
-			htmlStr += "비밀번호: <input type='text' name='memberPwd' value='" + pwd + "' /><br />";
-			htmlStr += "이메일: <input type='text' name='email' value='" + email + "' /><br />";
-			htmlStr += "가입일: " + creDate + "<br />";
-			htmlStr += "<input type='submit' value='정보 수정' onclick='setAction(\"./update\")' />";
-			htmlStr	+= "<input type='submit' value='삭제' onclick='setAction(\"./delete\")' />";
-			htmlStr += "<input type='button' value='취소' onclick='location.href=\"./list\"'/>";
-			htmlStr += "</form>";
-			htmlStr += "</body>";
-			htmlStr += "</html>";
-			
-			out.println(htmlStr);
-			
-			System.out.println("회원 상세 정보 수정 페이지 체크");
+			RequestDispatcher dispatcher = req.getRequestDispatcher("/member/MemberUpdateView.jsp");
+
+			dispatcher.forward(req, res);
 			
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block

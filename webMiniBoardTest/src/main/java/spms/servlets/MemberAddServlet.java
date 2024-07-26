@@ -7,6 +7,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
+import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -29,24 +30,10 @@ public class MemberAddServlet extends HttpServlet {
 		
 		res.setContentType("text/html");
 		res.setCharacterEncoding("UTF-8");
-		PrintWriter out = res.getWriter();
 		
-		String htmlStr = "";
-		
-		htmlStr += "<html><head><title>회원 등록</title></head>";
-		htmlStr += "<body>";
-		htmlStr += "<h1>회원등록</h1>";
-		htmlStr += "<form action='add' method='post'>";
-		htmlStr += "이름: <input type='text' name='memberName' /><br />";
-		htmlStr += "이메일: <input type='text' name='email' /><br />";
-		htmlStr += "암호: <input type='password' name='password' /><br />";
-		htmlStr += "<input type='submit' value='추가' />";
-		htmlStr += "<input type='reset' value='취소' />";
-		htmlStr += "<input type='button' value='돌아가기' onclick='location.href=\"./list\"'/>";
-		htmlStr += "</form>";
-		htmlStr += "</body></html>";
-		
-		out.println(htmlStr);
+		RequestDispatcher dispatcher = req.getRequestDispatcher("/member/MemberAddView.jsp");
+
+		dispatcher.forward(req, res);
 	}
 	
 	@Override

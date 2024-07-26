@@ -8,6 +8,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
 
@@ -20,7 +21,7 @@ import jakarta.servlet.http.HttpServletResponse;
 public class MemberDeleteServlet extends HttpServlet {
 
 	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -33,13 +34,15 @@ public class MemberDeleteServlet extends HttpServlet {
 		String user = sc.getInitParameter("user");
 		String password = sc.getInitParameter("password");
 		
+		int memberNo = Integer.parseInt(req.getParameter("memberNo"));
+		
 		try {
-			int memberNo = Integer.parseInt(req.getParameter("memberNo"));
 
 			Class.forName(driver);
 			conn = DriverManager.getConnection(url, user, password);
 
 			String sql = "";
+			String deSql = "";
 
 			// 이름 조회
 			sql = "SELECT MEMBER_NAME";
@@ -59,10 +62,10 @@ public class MemberDeleteServlet extends HttpServlet {
 			}
 			
 			// member 삭제
-			sql = "DELETE FROM MEMBER";
-			sql += " WHERE MEMBER_NO = ?";
+			deSql += "DELETE FROM MEMBER";
+			deSql += " WHERE MEMBER_NO = ?";
 
-			pstmt = conn.prepareStatement(sql);
+			pstmt = conn.prepareStatement(deSql);
 
 			pstmt.setInt(1, memberNo);
 
@@ -71,21 +74,11 @@ public class MemberDeleteServlet extends HttpServlet {
 			res.setContentType("text/html");
 			res.setCharacterEncoding("UTF-8");
 
-			PrintWriter out = res.getWriter();
+			req.setAttribute("memberName", memberName);
+			
+			RequestDispatcher dispatcher = req.getRequestDispatcher("/member/MemberDeleteView.jsp");
 
-			String htmlStr = "";
-
-			htmlStr += "<html>";
-			htmlStr += "<head>";
-			htmlStr += "<title>회원 정보</title>";
-			htmlStr += "</head>";
-			htmlStr += "<body>";
-			htmlStr += "<h1>" + memberName + " 회원이 삭제되었습니다.</h1>";
-			htmlStr += "<button onclick='location.href=\"./list\"'>list 페이지로 이동</button>";
-			htmlStr += "</body>";
-			htmlStr += "</html>";
-
-			out.println(htmlStr);
+			dispatcher.forward(req, res);
 
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
