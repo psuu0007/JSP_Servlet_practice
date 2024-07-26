@@ -8,6 +8,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
@@ -20,43 +21,48 @@ public class MemberAddServletTest extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		
+		ServletContext  sc = this.getServletContext();
+		
 		res.setContentType("text/html");
 		res.setCharacterEncoding("UTF-8");
 		PrintWriter out = res.getWriter();
 		
 		String htmlStr = "";
 		
-		htmlStr += "<html><head><title>회원등록</title>";
-		htmlStr += "<style>table {width: 100%;border: 1px solid #e3e3e3;border-collapse: collapse;}th, td {border: 1px solid #e3e3e3;padding: 10px;}</style>";
-		htmlStr += "<script type='text/javascript' src='../check.js'></script>";
-		htmlStr += "</head>";
-		htmlStr += "<body>";
-		htmlStr += "<h1>회원등록</h1>";
+		RequestDispatcher dispatcher;
+		
+		dispatcher = sc.getRequestDispatcher("/include/incHead.jsp");
+		dispatcher.include(req, res);
+		dispatcher = sc.getRequestDispatcher("/include/incTop.jsp");
+		dispatcher.include(req, res);
+		
+		htmlStr += "<h2 class='mb-4 fw-bold'>회원등록</h2>";
 		
 		htmlStr += "<form action='add' method='post' onsubmit='return addCheck()'>";
-		htmlStr += "<table border='1'>";
+		htmlStr += "<table class='table table-bordered'>";
 		htmlStr += "<tr>";
-		htmlStr += "<td style='width:20%; background: #f3f3f3'>이름</td>";
-		htmlStr += "<td><input type='text' id='memberName' name='memberName'></td>";
+		htmlStr += "<td style='width:10%; background: #f3f3f3'>이름</td>";
+		htmlStr += "<td><input type='text' id='memberName' name='memberName' class='form-control'></td>";
 		htmlStr += "</tr>";
 		htmlStr += "<tr>";
 		htmlStr += "<td style='background: #f3f3f3'>이메일</td>";
-		htmlStr += "<td><input type='text' id='email' name='email'></td>";
+		htmlStr += "<td><input type='text' id='email' name='email' class='form-control'></td>";
 		htmlStr += "</tr>";
 		htmlStr += "<tr>";
 		htmlStr += "<td style='background: #f3f3f3'>암호</td>";
-		htmlStr += "<td><input type='password' id='password' name='password'></td>";
+		htmlStr += "<td><input type='password' id='password' name='password' class='form-control'></td>";
 		htmlStr += "</tr>";
 		htmlStr += "</table>";
 		htmlStr += "<div style='padding-top: 20px;text-align: center;'>";
-		htmlStr += "<input type='submit' value='추가'>&nbsp;&nbsp;";
-		htmlStr += "<input type='reset' value='취소' onclick=javascript:location.href='list'>";
+		htmlStr += "<input type='submit' value='추가' class='btn btn-primary'>&nbsp;&nbsp;";
+		htmlStr += "<input type='reset' value='취소' onclick=javascript:location.href='list' class='btn btn-secondary'>";
 		htmlStr += "</div>";
 		htmlStr += "</form>";
 		
-		htmlStr += "</body></html>";
-		
 		out.println(htmlStr);
+		
+		dispatcher = sc.getRequestDispatcher("/include/incFooter.jsp");
+		dispatcher.include(req, res);
 	}
 	
 	@Override

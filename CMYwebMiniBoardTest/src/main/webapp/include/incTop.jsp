@@ -7,6 +7,7 @@
                 <div class="sidebar-heading border-bottom bg-light">webMiniBoard</div>
                 <div class="list-group list-group-flush">
                     <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Member</a>
+                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Board</a>
 <!--                     <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Shortcuts</a> -->
 <!--                     <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Overview</a> -->
 <!--                     <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Events</a> -->
@@ -39,4 +40,4 @@
                     </div>
                 </nav>
                 <!-- Page content-->
-                <div class="container-fluid">
+                <div class="container-fluid" style='padding:30px;'>

@@ -9,6 +9,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
 
+import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
@@ -67,22 +68,24 @@ public class MemberDeleteServletTest extends HttpServlet {
 			
 			String htmlStr = "";
 			
-			htmlStr += "<html lang='ko'>";
-			htmlStr += "<head>";
-			htmlStr += "<meta charset='UTF-8'>";
-			htmlStr += "<title>회원목록</title>";
-			htmlStr += "</head>";
-			htmlStr += "<body>";
-			htmlStr += "<H1>";
+			RequestDispatcher dispatcher;
+			
+			dispatcher = sc.getRequestDispatcher("/include/incHead.jsp");
+			dispatcher.include(req, res);
+			dispatcher = sc.getRequestDispatcher("/include/incTop.jsp");
+			dispatcher.include(req, res);			
+			
+			htmlStr += "<H2>";
 			htmlStr += memberNameStr + "님의 회원 정보가 성공적으로 삭제 되었습니다!";
-			htmlStr += "</H1>";
-			htmlStr += "<br><br><button onclick=javascript:location.href='list'>회원목록</button>";
+			htmlStr += "</H2>";
+			htmlStr += "<br><br><button class='btn btn-secondary' onclick=javascript:location.href='list'>회원목록</button>";
 			htmlStr += "</body>";
 			htmlStr += "</html>";			
 			
 			out.println(htmlStr);
 			
-			//res.addHeader("Refresh", "2; url=./list");
+			dispatcher = sc.getRequestDispatcher("/include/incFooter.jsp");
+			dispatcher.include(req, res);
 
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();

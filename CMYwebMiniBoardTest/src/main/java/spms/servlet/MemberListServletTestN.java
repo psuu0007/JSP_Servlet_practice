@@ -8,6 +8,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -30,7 +31,7 @@ public class MemberListServletTestN extends HttpServlet {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		
-		ServletContext  sc = this.getServletContext();
+		ServletContext sc = this.getServletContext();
 		
 		String driver = sc.getInitParameter("driver");
 		String url = sc.getInitParameter("url");
@@ -62,8 +63,12 @@ public class MemberListServletTestN extends HttpServlet {
 				htmlStr += "<button onclick=javascript:location.href='add'>신규 회원 등록</button>";
 			htmlStr += "</div>";
 			
-			out.println("<jsp:incldue page = '../include/incHead.jsp' />");
-			out.println("<jsp:incldue page = '../include/incTop.jsp' />");
+			RequestDispatcher dispatcher;
+			
+			dispatcher = sc.getRequestDispatcher("/include/incHead.jsp");
+			dispatcher.include(req, res);
+			dispatcher = sc.getRequestDispatcher("/include/incTop.jsp");
+			dispatcher.include(req, res);
 			
 			out.println("<h1>회원목록</h1>");
 			
@@ -98,7 +103,8 @@ public class MemberListServletTestN extends HttpServlet {
 			out.println("<input type='hidden' id='memberName' name='memberName' value=''>");
 			out.println("</form>");
 			
-			out.println("<jsp:incldue page = '../include/incFooter.jsp' />");
+			dispatcher = sc.getRequestDispatcher("/include/incFooter.jsp");
+			dispatcher.include(req, res);
 			
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();

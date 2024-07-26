@@ -9,6 +9,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
 
+import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
@@ -71,37 +72,38 @@ public class MemberUpdateServletTest extends HttpServlet {
 			
 			String htmlStr = "";
 			
-			htmlStr += "<html><head><title>회원상세정보</title>";
-			htmlStr += "<style>table {width: 100%;border: 1px solid #e3e3e3;border-collapse: collapse;}th, td {border: 1px solid #e3e3e3;padding: 10px;}</style>";
-			htmlStr += "<script type='text/javascript' src='../check.js'></script>";
-			htmlStr += "</head>";
-			htmlStr += "<body>";
-			htmlStr += "<meta charset='UTF-8'>";
-			htmlStr += "<h1>회원상세정보</h1>";
+			RequestDispatcher dispatcher;
+			
+			dispatcher = sc.getRequestDispatcher("/include/incHead.jsp");
+			dispatcher.include(req, res);
+			dispatcher = sc.getRequestDispatcher("/include/incTop.jsp");
+			dispatcher.include(req, res);
+			
+			htmlStr += "<h1 class='mb-4 fw-bold'>회원상세정보</h1>";
 			
 			htmlStr += "<form action='update' method='post' onsubmit='return passCheck()'>";
-			htmlStr += "<table border='1'>";
+			htmlStr += "<table class='table table-bordered'>";
 			htmlStr += "<input type='hidden' id='passN' name='password' value='" + password + "'>";
 			htmlStr += "<tr>";
-			htmlStr += "<td style='width:20%; background: #f3f3f3'>번호</td>";
-			htmlStr += "<td><input type='text' name='memberNo' value='" + memberNo + "' readonly></td>";
+			htmlStr += "<td style='width:10%; background: #f3f3f3'>번호</td>";
+			htmlStr += "<td><input type='text' name='memberNo' class='form-control' value='" + memberNo + "' readonly></td>";
 			htmlStr += "</tr>";
 			htmlStr += "<tr>";
 			htmlStr += "<td style='background: #f3f3f3'>이름</td>";
-			htmlStr += "<td><input type='text' name='memberName' value='" + memberName + "'></td>";
+			htmlStr += "<td><input type='text' name='memberName' class='form-control' value='" + memberName + "'></td>";
 			htmlStr += "</tr>";
 			htmlStr += "<tr>";
 			htmlStr += "<td style='background: #f3f3f3'>이메일</td>";
-			htmlStr += "<td><input type='text' name='email' value='" + email + "'></td>";
+			htmlStr += "<td><input type='text' name='email' class='form-control' value='" + email + "'></td>";
 			htmlStr += "</tr>";
 			htmlStr += "<tr>";
 			htmlStr += "<tr>";
 			htmlStr += "<td style='background: #f3f3f3'>이전 비밀번호</td>";
-			htmlStr += "<td><input type='password' id='pass1' name='password1' value=''></td>";
+			htmlStr += "<td><input type='password' id='pass1' name='password1' class='form-control' value=''></td>";
 			htmlStr += "</tr>";
 			htmlStr += "<tr>";
 			htmlStr += "<td style='background: #f3f3f3'>새로운 비밀번호</td>";
-			htmlStr += "<td><input type='password' id='pass2' name='password2' value=''></td>";
+			htmlStr += "<td><input type='password' id='pass2' name='password2' class='form-control' value=''></td>";
 			htmlStr += "</tr>";
 			htmlStr += "<tr>";			
 			htmlStr += "<td style='background: #f3f3f3'>가입일</td>";
@@ -109,9 +111,9 @@ public class MemberUpdateServletTest extends HttpServlet {
 			htmlStr += "</tr>";			
 			htmlStr += "</table>";
 			htmlStr += "<div style='padding-top: 20px;text-align: center;'>";
-			htmlStr += "<input type='submit' value='정보수정'>&nbsp;&nbsp;";
-			htmlStr += "<input type='button' value='정보삭제' onclick=javascript:memberDelete(" + memberNo + ",'" + memberName + "');>&nbsp;&nbsp;";
-			htmlStr += "<input type='reset' value='취소' onclick=javascript:location.href='list'>";
+			htmlStr += "<input type='submit' value='정보수정' class='btn btn-primary'>&nbsp;&nbsp;";
+			htmlStr += "<input type='button' value='정보삭제' class='btn btn-danger' onclick=javascript:memberDelete(" + memberNo + ",'" + memberName + "');>&nbsp;&nbsp;";
+			htmlStr += "<input type='reset' value='취소' class='btn btn-secondary' onclick=javascript:location.href='list'>";
 			htmlStr += "</div>";
 			htmlStr += "</form>";
 			
@@ -123,6 +125,9 @@ public class MemberUpdateServletTest extends HttpServlet {
 			htmlStr += "</body></html>";
 			
 			out.println(htmlStr);
+			
+			dispatcher = sc.getRequestDispatcher("/include/incFooter.jsp");
+			dispatcher.include(req, res);
 
 
 		} catch (ClassNotFoundException e) {
