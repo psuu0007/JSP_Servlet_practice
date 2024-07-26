@@ -5,16 +5,11 @@
 <head>	
 <meta charset="UTF-8">
 <title>로그인</title>
-<style>
-
-</style>
-
-<script>
-
-</script>
+<link rel="stylesheet" href="../css/listPage.css" />
 </head>
 	
 <body>
+<jsp:include page="/Header.jsp" />
 <h2>사용자 로그인</h2>
 <form action="./login" method="post">
 	<label>이메일</label> <input type="text" name="email" value="" placeholder="ex:hong@test.com" />
@@ -23,5 +18,6 @@
 	<br/>
 	<input type="submit" value="로그인" />
 </form>
+<jsp:include page="/Tail.jsp" />
 </body>
 </html>
