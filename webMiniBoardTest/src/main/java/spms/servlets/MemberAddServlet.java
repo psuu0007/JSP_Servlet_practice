@@ -1,11 +1,7 @@
 package spms.servlets;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
 
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletContext;
@@ -14,91 +10,57 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import spms.dao.MemberDao;
+import spms.dto.MemberDto;
 
-/**
- * ALT + SHIFT + J : API 주석
- * 회 원목록 조회 구현
- * 
- */
 @WebServlet(value = "/member/add")
 public class MemberAddServlet extends HttpServlet {
-	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		System.out.println("doGet을 수행");
-		
-		res.setContentType("text/html");
-		res.setCharacterEncoding("UTF-8");
-		
-		RequestDispatcher dispatcher = req.getRequestDispatcher("/member/MemberAddView.jsp");
-
-		dispatcher.forward(req, res);
+		res.sendRedirect("./MemberAddView.jsp");
 	}
 	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		Connection conn = null;
-		PreparedStatement pstmt = null;
-		
-		ServletContext sc = this.getServletContext();
-		
-		String driver = sc.getInitParameter("driver");
-		String url =  sc.getInitParameter("url");
-		String user =  sc.getInitParameter("user");
-		String password =  sc.getInitParameter("password");
 		
 		try {
 			String emailStr = req.getParameter("email");
 			String pwdStr = req.getParameter("password");
 			String memberNameStr = req.getParameter("memberName");
 			
-			Class.forName(driver);
-			conn = DriverManager.getConnection(url, user, password);
+			MemberDto memberDto = new MemberDto();
+			memberDto.setEmail(emailStr);
+			memberDto.setPassword(pwdStr);
+			memberDto.setMemberName(memberNameStr);
 			
-			String sql = "";
+			ServletContext sc = this.getServletContext();
+			conn = (Connection) sc.getAttribute("conn");
 			
-			sql += "INSERT INTO MEMBER";
-			sql += " (MEMBER_NO, EMAIL, PWD, MEMBER_NAME, CRE_DATE, MOD_DATE)";
-			sql += " VALUES (MEMBER_NO_SEQ.NEXTVAL, ?, ?, ?, SYSDATE, SYSDATE)";
+			MemberDao memberDao = new MemberDao();
+			memberDao.serConnection(conn);
 			
-			pstmt = conn.prepareStatement(sql);
+			int result;
 			
-			pstmt.setString(1, emailStr);
-			pstmt.setString(2, pwdStr);
-			pstmt.setString(3, memberNameStr);
+			result = memberDao.memberInsert(memberDto);
 			
-			pstmt.executeUpdate();
+			// 0: 추가한 회원 X
+			// 1: 추가한 회원 1명
+			if (result == 0) {
+				System.out.println("회원가입 실패");
+				System.out.println("실패에 관련된 로직 처리해야 함");
+			}
 			
-			// 다른 화면 혹은 다른 서블릿을 호출하는 메서드
 			res.sendRedirect("./list");
 			
-			
-		} catch (ClassNotFoundException e) {
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} finally {
-			if(pstmt != null) {
-				try {
-					pstmt.close();
-				} catch (SQLException e) {
-					// TODO: handle exception
-					e.printStackTrace();
-				}	
-			}
+			req.setAttribute("error", e);
+			RequestDispatcher dispatcher = req.getRequestDispatcher("/Error.jsp");
 			
-			if(conn != null) {
-				try {
-					conn.close();
-				} catch (SQLException e) {
-					// TODO: handle exception
-					e.printStackTrace();
-				}	
-			}
-		} // finally end
+			dispatcher.forward(req, res);
+		}
 	}
 }

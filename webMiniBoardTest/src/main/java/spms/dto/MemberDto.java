@@ -13,7 +13,6 @@ public class MemberDto {
 
 	public MemberDto() {
 		super();
-
 	}
 
 	public MemberDto(int memberNo, String email, String password, String memberName, Date createdDate,
@@ -29,8 +28,26 @@ public class MemberDto {
 
 	public MemberDto(String email, String memberName) {
 		// TODO Auto-generated constructor stub
+		super();
 		this.email = email;
 		this.memberName = memberName;
+	}
+
+	public MemberDto(int memberNo, String email, String memberName, Date createdDate) {
+		super();
+		this.memberNo = memberNo;
+		this.email = email;
+		this.memberName = memberName;
+		this.createdDate = createdDate;
+	}
+	
+	public MemberDto(int memberNo, String email, String password, String memberName, Date createdDate) {
+		super();
+		this.memberNo = memberNo;
+		this.email = email;
+		this.password = password;
+		this.memberName = memberName;
+		this.createdDate = createdDate;
 	}
 
 	public int getMemberNo() {

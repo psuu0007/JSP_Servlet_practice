@@ -15,7 +15,6 @@
 function setAction(action) {
 	document.getElementById('myForm').action = action;
 }
-
 function movePageMemberList() {
 	location.href = "./list";
 }
