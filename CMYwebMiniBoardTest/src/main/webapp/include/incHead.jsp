@@ -10,7 +10,8 @@
         <title>webMiniBoard</title>
 
         <!-- Core theme CSS (includes Bootstrap)-->
-        <link href="../assets/styles.css" rel="stylesheet" />
-        <script type='text/javascript' src='../assets/check.js'></script>
+        <link href="${pageContext.request.contextPath}/assets/styles.css" rel="stylesheet" />
+        <link href="${pageContext.request.contextPath}/assets/custom.css" rel="stylesheet" />
+        <script type='text/javascript' src='${pageContext.request.contextPath}/assets/check.js'></script>
     </head>
     <body>

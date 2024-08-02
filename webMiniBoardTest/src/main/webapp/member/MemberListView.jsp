@@ -1,65 +1,34 @@
-<%@ page import="spms.dto.MemberDto"%>
-<%@ page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <link rel="stylesheet" href="../css/listPage.css" />
-<style>
-</style>
-
-<script>
-	
-</script>
+<style></style>
+<script></script>
 </head>
-
-<jsp:useBean id="memberList" scope="request"
-	class="java.util.ArrayList"
-	type="java.util.ArrayList<spms.dto.MemberDto>" />
 
 <body>
 	<jsp:include page="/Header.jsp" />
 
-	<div id="main_content">
-		<div class="title">
-			<h1 class="title_name">회원 목록</h1>
-			<p class="move_page">
-				<button onclick="location.href='./add'" class="btn add_page_btn">신규
-					회원 등록</button>
-			</p>
-		</div>
+	<h1>회원 목록</h1>
+	<p>
+		<a href="./add">신규 회원 등록</a>
+	</p>
 
-		<div class="title_list">
-			<span>회원 번호</span> <span>회원 이름</span> <span>회원 이메일</span> <span>가입일</span>
-			<span>회원 삭제 버튼</span>
-		</div>
-
-		<%
-		for (MemberDto memberDto : memberList) {
-		%>
-
-		<div class="user_info">
-
-			<span><%=memberDto.getMemberNo()%></span>
-			<span> 
-				<a
-					href='./update?memberNo=<%=memberDto.getMemberNo()%>'> 
-					<%=memberDto.getMemberName()%>
-				</a>
-			</span> 
-			<span><%=memberDto.getEmail()%></span> 
-			<span><%=memberDto.getCreatedDate()%></span>
-			<span><a href='./delete?memberNo=<%=memberDto.getMemberNo()%>'>[삭제]</a></span>
-		</div>
-
-		<%
-		} // for end
-		%>
-	</div>
-
+	<c:forEach var="memberDto" items="${memberList}">
+		${memberDto.memberNo},
+		<a href='./update?memberNo=${memberDto.memberNo}'>
+			${memberDto.memberName}
+		</a>,
+		${memberDto.email},
+		${memberDto.createdDate},
+		<a href='./delete?memberNo=${memberDto.memberNo}'>[삭제]</a>
+		<br />
+	</c:forEach>
 
 	<jsp:include page="/Tail.jsp" />
 </body>

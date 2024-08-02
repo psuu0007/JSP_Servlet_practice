@@ -1,0 +1,76 @@
+@charset "UTF-8";
+
+span {
+	display: block;
+	width: 300px;
+}
+
+a {
+	text-decoration: none;
+	color: black;
+}
+
+a:hover {
+	text-decoration: underline;
+	color: #86eb86;
+}
+
+#main_content {
+	height: 80vh;
+	margin: 30px auto 10px;
+}
+
+#main_content .boardTable {
+	width: 800px;
+	margin: 0 auto 20px;
+}
+
+#main_content .boardTable {
+	border: 1px solid;
+	border-collapse: collapse;
+	text-align: center;
+	border-top-left-radius: 10px;
+	border-top-right-radius: 10px;
+	border-style: hidden;
+	box-shadow: 0 0 0 1px #000;
+	overflow: hidden;
+}
+
+#main_content .boardTable .boardTableRow {
+	height: 40px;
+}
+
+#main_content .boardTable .boardTableRow .boardTableCol {
+	border: 1px solid;
+	border-collapse: collapse;
+}
+
+#main_content .boardTable .boardTableRow .boardTableCol.boardTableCol_first {
+	text-align: left;
+}
+
+#main_content .boardTable .boardTableRow .boardTableCol.boardTable_bg_color
+	{
+	background-color: #FFF6F9;
+}
+
+#main_content .boardTable .boardTableRow .boardTableCol.boardTable_Content
+{
+	height: 60vh;
+	text-align: left;  /* 왼쪽 정렬 */
+  vertical-align: top;  /* 상단 정렬 */
+  padding: 10px;
+}
+
+#main_content .pageMove {
+	display: flex;
+	justify-content: center;
+}
+
+#main_content .pageMove .pageMove_btn {
+	height: 33px;
+}
+
+#main_content .pageMove .pageMove_btn:last-child {
+	margin-left: 10px;
+}

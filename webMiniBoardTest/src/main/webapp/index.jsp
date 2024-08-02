@@ -14,6 +14,8 @@
 </script>
 </head>
 <body>
+	<jsp:include page="/Header.jsp" />
+
 	<div class="main_conteint">
 		<h1 class="main_conteint__title">Hello JSP&amp;Servlet</h1>
 		<p class="main_conteint__content">환영</p>
@@ -21,5 +23,7 @@
 	<div class="move">
 		<button class="btn move_login__btn" onclick="pageMoveLoginFnc();">로그인</button>
 	</div>
+	
+	<jsp:include page="/Tail.jsp" />
 </body>
 </html>
